@@ -23,6 +23,19 @@ const BankStatement = () => {
 
     }, []);
 
+    function formatDate(dateString){
+        const date = new Date(dateString);
+        const day = String(date.getDate()).padStart(2, '0');
+        const month = String(date.getMonth() + 1).padStart(2, '0');
+        const year = String(date.getFullYear());
+
+        return `${day}/${month}/${year}`;
+    }
+
+    function changePointToComma(value){
+        return String(value).replace(/\./g, ',');
+    }
+
     const [currentPage, setCurrentPage] = useState(1);
     const totalPages = Math.ceil(data.length / itemsPerPage);
     const startIndex = (currentPage - 1) * itemsPerPage;
@@ -52,8 +65,8 @@ const BankStatement = () => {
                         </tr>
                         {data.slice(startIndex, endIndex).map((item) => (
                             <tr key={item.id}>
-                                <td>{item.dataTransferencia}</td>
-                                <td>R$ {item.valor}</td>
+                                <td>{formatDate(item.dataTransferencia)}</td>
+                                <td>R$ {changePointToComma(item.valor)}</td>
                                 <td>{item.tipo}</td>
                                 <td>{item.nomeOperadorTransacao}</td>
                             </tr>
@@ -64,9 +77,12 @@ const BankStatement = () => {
                 <footer>
                     <button className="change-view" onClick={handlePrevPage}>&lt;&lt;</button>
                     <button className="change-view" onClick={handlePrevPage}>&lt;</button>
-                    {Array.from({ length: totalPages }, (_, index) => index + 1).map((pageNumber) => (
-                        <p key={pageNumber} onClick={() => setCurrentPage(pageNumber)}>{pageNumber}</p>
-                    ))}
+                    <div className="pages-numbers">
+                        {Array.from({ length: totalPages }, (_, index) => index + 1).map((pageNumber) => (
+                            <p key={pageNumber} onClick={() => setCurrentPage(pageNumber)}>{pageNumber}</p>
+                        ))}
+                    </div>
+                    
                     <button className="change-view" onClick={handleNextPage}>&gt;</button>
                     <button className="change-view" onClick={handleNextPage}>&gt;&gt;</button>
                 </footer>

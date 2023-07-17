@@ -27,7 +27,7 @@ td{
 
 footer{
     display: flex;
-    justify-content: space-around;
+    justify-content: center;
     width: 1000px;
     height: 50px;
     border: 1px solid black;
@@ -36,4 +36,12 @@ footer{
 .change-view{
     border: none;
     background-color: transparent;
+    cursor: pointer;
+}
+
+.pages-numbers{
+    width: 100px;
+    display: flex;
+    justify-content: space-evenly;
+    cursor: pointer;
 }
