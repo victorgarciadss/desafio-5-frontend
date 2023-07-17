@@ -6,6 +6,13 @@ main{
     width: 1000px;
     border: 1px solid black;
     height: 40px;
+    display: flex;
+    align-items: center;
+}
+
+.total-balance{
+    margin-left: 5px;
+    margin-right: 5px;
 }
 
 .table{

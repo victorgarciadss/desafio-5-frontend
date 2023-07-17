@@ -6,6 +6,7 @@ const BankStatement = () => {
 
     const { data, setData } = useContext(GlobalContext);
     const itemsPerPage = 4;
+    const [balance, setBalance] = useState([]);
 
     useEffect(() => {
         const fetchData = async () => {
@@ -19,7 +20,20 @@ const BankStatement = () => {
             setData(responseAll);
         }
 
+        const fetchBalance = async () => {
+            const response = await fetch("http://localhost:8080/transferencias/saldo", {
+                headers: {
+                    "Content-Type": "application/json"
+                }
+            });
+
+            const responseBalance = await response.json();
+            setBalance(responseBalance);
+            console.log(responseBalance);
+        }
+
         fetchData();
+        fetchBalance();
 
     }, []);
 
@@ -41,6 +55,8 @@ const BankStatement = () => {
     const startIndex = (currentPage - 1) * itemsPerPage;
     const endIndex = startIndex + itemsPerPage;
 
+    
+
     const handlePrevPage = () => {
         setCurrentPage(prevPage => Math.max(prevPage - 1, 1))
     }
@@ -53,7 +69,13 @@ const BankStatement = () => {
         <>
             <main>
                 <div className="bank-balance">
-                    Saldo Total:
+                    <div className="total-balance">
+                        Saldo Total: R$ {changePointToComma(balance)}
+                    </div>
+                    <div>
+                        Saldo no Período: R$ {changePointToComma(balance)}
+                    </div>
+                    
                 </div>
                 <table className="table">
                     <tbody>
@@ -63,6 +85,7 @@ const BankStatement = () => {
                             <td>Tipo</td>
                             <td>Nome do operador <br /> transacionado</td>
                         </tr>
+                    
                         {data.slice(startIndex, endIndex).map((item) => (
                             <tr key={item.id}>
                                 <td>{formatDate(item.dataTransferencia)}</td>
