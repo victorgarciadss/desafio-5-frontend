@@ -1,11 +1,14 @@
-import { useState } from "react"
+import { useContext, useState } from "react"
 import "../css/SearchForm.css"
+import { GlobalContext } from "../CreateContext";
 
 const SearchForm = () => {
 
   const [dataInicio, setDataInicio] = useState('');
   const [dataFim, setDataFim] = useState('');
   const [nomeOperadorTransacao, setNomeOperadorTransacao] = useState('');
+
+  const { data, setData } = useContext(GlobalContext);
 
   async function submitDataWithAllFilters(e) {
     e.preventDefault();
@@ -25,7 +28,8 @@ const SearchForm = () => {
         });
   
         const responseData = await response.json();
-        console.log(responseData);
+        console.log(responseData)
+        setData(responseData);
   
       } catch (err) {
         console.log(err);
@@ -42,7 +46,7 @@ const SearchForm = () => {
         });
   
         const responseData = await response.json();
-        console.log(responseData);
+        setData(responseData);
   
       } catch (err) {
         console.log(err);
