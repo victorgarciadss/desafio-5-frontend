@@ -1,12 +1,28 @@
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import "../css/bankStatement.css"
 import { GlobalContext } from "../CreateContext";
 
 const BankStatement = () => {
 
-    const { data } = useContext(GlobalContext);
+    const { data, setData } = useContext(GlobalContext);
 
-    return(
+    useEffect(() => {
+        const fetchData = async () => {
+            const response = await fetch("http://localhost:8080/transferencias", {
+                headers: {
+                    "Content-Type": "application/json"
+                }
+            });
+
+            const responseAll = await response.json();
+            setData(responseAll);
+        }
+
+        fetchData();
+
+    }, []);
+
+    return (
         <>
             <main>
                 <div className="bank-balance">
@@ -23,7 +39,7 @@ const BankStatement = () => {
                         {data.map((item) => (
                             <tr key={item.id}>
                                 <td>{item.dataTransferencia}</td>
-                                <td>{item.valor}</td>
+                                <td>R$ {item.valor}</td>
                                 <td>{item.tipo}</td>
                                 <td>{item.nomeOperadorTransacao}</td>
                             </tr>
