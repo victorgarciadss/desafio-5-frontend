@@ -10,8 +10,6 @@ const BankStatement = () => {
 
     useEffect(() => {
 
-        
-
         const fetchData = async () => {
             const response = await fetch("http://localhost:8080/transferencias", {
                 headers: {
@@ -34,7 +32,6 @@ const BankStatement = () => {
 
             const responseBalance = await response.json();
             setBalance(responseBalance);
-            console.log(responseBalance);
         }
 
         fetchData();
@@ -63,11 +60,11 @@ const BankStatement = () => {
     
 
     const handlePrevPage = () => {
-        setCurrentPage(prevPage => Math.max(prevPage - 1, 1))
+        setCurrentPage(prevPage => Math.max(prevPage - 1, 1));
     }
 
     const handleNextPage = () => {
-        setCurrentPage(prevPage => Math.min(prevPage + 1, totalPages))
+        setCurrentPage(prevPage => Math.min(prevPage + 1, totalPages));
     }
 
     return (

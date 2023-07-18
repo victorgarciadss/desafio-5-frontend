@@ -8,17 +8,23 @@ main{
     height: 40px;
     display: flex;
     align-items: center;
+    background-color: #11C770;
+    color: white;
 }
 
 .total-balance{
     margin-left: 5px;
-    margin-right: 5px;
+    margin-right: 25px;
 }
 
 .table{
     width: 1000px;
     border-top: 2px solid black;
     border-collapse: collapse;
+}
+
+.table-row{
+    font-weight: bold;
 }
 
 tr{

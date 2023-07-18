@@ -51,18 +51,14 @@ const SearchForm = () => {
 
         const balanceTimeData = await balanceResponse.json();
         setBalancePerTime(balanceTimeData);
-        console.log(balanceTimeData);
       }
 
       const responseData = await response.json();
       setData(responseData);
-      console.log(data);
     
     } catch (err) {
     console.log(err);
   }
-
-
 
 
 
