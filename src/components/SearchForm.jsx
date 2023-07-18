@@ -8,7 +8,7 @@ const SearchForm = () => {
   const [dataFim, setDataFim] = useState('');
   const [nomeOperadorTransacao, setNomeOperadorTransacao] = useState('');
 
-  const { data, setData } = useContext(GlobalContext);
+  const { data, setData, balancePerTime, setBalancePerTime, setPost } = useContext(GlobalContext);
 
   async function submitDataWithAllFilters(e) {
     e.preventDefault();
@@ -38,6 +38,20 @@ const SearchForm = () => {
           },
           body: JSON.stringify({ dataInicio, dataFim, nomeOperadorTransacao })
         });
+
+        setPost(true);
+
+        const balanceResponse = await fetch("http://localhost:8080/transferencias/saldo/tempo", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify({ dataInicio, dataFim, nomeOperadorTransacao })
+        });
+
+        const balanceTimeData = await balanceResponse.json();
+        setBalancePerTime(balanceTimeData);
+        console.log(balanceTimeData);
       }
 
       const responseData = await response.json();

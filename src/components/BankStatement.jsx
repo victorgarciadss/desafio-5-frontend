@@ -4,17 +4,22 @@ import { GlobalContext } from "../CreateContext";
 
 const BankStatement = () => {
 
-    const { data, setData } = useContext(GlobalContext);
+    const { data, setData, balancePerTime, post, setPost } = useContext(GlobalContext);
     const itemsPerPage = 4;
     const [balance, setBalance] = useState([]);
 
     useEffect(() => {
+
+        
+
         const fetchData = async () => {
             const response = await fetch("http://localhost:8080/transferencias", {
                 headers: {
                     "Content-Type": "application/json"
                 }
             });
+
+            setPost(false);
 
             const responseAll = await response.json();
             setData(responseAll);
@@ -70,10 +75,10 @@ const BankStatement = () => {
             <main>
                 <div className="bank-balance">
                     <div className="total-balance">
-                        Saldo Total: R$ {changePointToComma(balance)}
+                        Saldo Total: R$ {data.length == 0 ? "0" : changePointToComma(balance)}
                     </div>
                     <div>
-                        Saldo no Período: R$ {changePointToComma(balance)}
+                        Saldo no Período: R$ {data.length == 0 ? "0" : post ? changePointToComma(balancePerTime) : changePointToComma(balance)}
                     </div>
                     
                 </div>

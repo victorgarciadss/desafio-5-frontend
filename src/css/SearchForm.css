@@ -21,4 +21,8 @@
     width: 100px;
     margin-left: auto;
     height: 25px;
+    background-color: #11C770;
+    color: white;
+    border: none;
+    cursor: pointer;
 }
